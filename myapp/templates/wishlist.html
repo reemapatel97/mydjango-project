@@ -1,0 +1,60 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+   </head>
+   <!-- body -->
+   <body class="main-layout">
+      
+      <!-- banner -->
+           <!-- products -->
+      <div  class="products">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Wishlist Products</h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="our_products">
+                     <div class="row">
+                     {% if wishlists %}   
+                     {% for i in wishlists %}
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 margin">
+                           <div class="product_box">
+                              <img src="{{i.product.product_image.url}}" height="200px" width="200px" alt="img"/ >
+                              <h3>Rs.{{i.product.product_price}}<br>{{i.product.product_category}}</h3><br>
+                              <!--{% if request.session.email %}
+                                 <a href=""><input type="button" value="Add To Wishlist" class="btn btn-primary"></a>
+                                 <a href=""><input type="button" value="Add To Cart" class="btn btn-primary"></a>
+                              {% else %}
+                                 <a href="{% url 'login' %}"><input type="button" value="Login" class="btn btn-primary"></a>
+                              {% endif %} --> 
+                              {% if request.session.email %}
+                                 <a href="{% url 'user_product_detail' pk=i.product.pk %}"><input type="button" value="Details" class="btn btn-primary"></a>
+                              {% else %}   
+                                 <a href="{% url 'login' %}"><input type="button" value="Login" class="btn btn-primary"></a>
+                              {% endif %}     
+                           </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                           <h3><b><span style="color:red; font-size: 25px;">No Products In Wishlist.</h3></span></b>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end products -->
+      
+ </body>
+ </html>     
+ {% endblock %}

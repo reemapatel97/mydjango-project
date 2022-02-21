@@ -1,0 +1,82 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+   </head>
+   <!-- body -->
+   <body class="main-layout">
+      
+      <!-- banner -->
+           <!-- products -->
+      <div  class="products">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Cart Products</h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="our_products">
+                     <div class="row">
+                     {% if carts %}   
+                     {% for i in carts %}
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 margin">
+                           <div class="product_box">
+                              <img src="{{i.product.product_image.url}}" height="200px" width="200px" alt="img"/ >
+                              <h3>Rs.{{i.product.product_price}}<br>{{i.product.product_category}}
+                                 <br>
+                                 <form name="change_qty" method="post" action="{% url 'change_qty' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="cid" value="{{i.id}}">
+                                    Quantity : <input type="number" name="product_qty" value="{{i.product_qty}}" min="1" max="10" onchange="this.form.submit()"> 
+                                 </form>
+                                 <br>Total Price : {{i.total_price}}</h3><br>
+                              <!--{% if request.session.email %}
+                                 <a href=""><input type="button" value="Add To Wishlist" class="btn btn-primary"></a>
+                                 <a href=""><input type="button" value="Add To Cart" class="btn btn-primary"></a>
+                              {% else %}
+                                 <a href="{% url 'login' %}"><input type="button" value="Login" class="btn btn-primary"></a>
+                              {% endif %} --> 
+                              {% if request.session.email %}
+                                 <a href="{% url 'user_product_detail' pk=i.product.pk %}"><input type="button" value="Details" class="btn btn-primary"></a>
+                              {% else %}   
+                                 <a href="{% url 'login' %}"><input type="button" value="Login" class="btn btn-primary"></a>
+                              {% endif %}     
+                           </div>
+                        </div>
+                        
+                        {% endfor %}
+                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 margin">
+                           <div class="product_box">
+                              <img src="">
+                                 <br>
+                                 <h1><b>Net Price : <span style="color:red" >{{net_price}}</span></b></h1>
+                                 <form name="pay" method="post" action="{% url 'pay' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="amount" value="{{net_price}}">
+                                    <input type="submit" name="action" value="Proceed To Pay" class="btn btn-primary">
+                                 </form>   
+                              
+                           </div>
+                        </div>
+                       
+                        {% else %}
+                           <h3><b><span style="color:red; font-size: 25px;">No Products In Cart.</h3></span></b>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end products -->
+      
+ </body>
+ </html>     
+ {% endblock %}

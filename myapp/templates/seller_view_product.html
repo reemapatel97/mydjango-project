@@ -1,0 +1,48 @@
+{% extends 'seller_header.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      
+   </head>
+   <!-- body -->
+   <body class="main-layout">
+      
+      <!-- banner -->
+           <!-- products -->
+      <div  class="products">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>My Products</h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="our_products">
+                     <div class="row">
+                     {% for i in products %}
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 margin">
+                           <div class="product_box">
+                              <img src="{{i.product_image.url}}" height="200px" width="200px" alt="img"/ >
+                              <h3>Rs.{{i.product_price}}<br>{{i.product_category}}</h3><br>
+                              <a href="{% url 'seller_edit_product' pk=i.pk %}"><input type="button" value="EDIT" class="btn btn-primary"></a>
+                              <a href="{% url 'seller_delete_product' pk=i.pk %}"><input type="button" value="DELETE" class="btn btn-danger"></a>
+                           </div>
+                        </div>
+                        {% endfor %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end products -->
+      
+ </body>
+ </html>     
+ {% endblock %}

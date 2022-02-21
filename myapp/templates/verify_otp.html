@@ -1,0 +1,69 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <script type="text/javascript">
+      function checkOTP()
+      {
+        var otp=document.frm.otp.value;
+        var uotp=document.frm.uotp.value;
+
+        if (otp!=uotp)
+        {
+            alert("Invalid OTP");
+        }
+      }
+
+  </script>
+</head>
+<!--  contact -->
+<div class="contact">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="titlepage">
+               <h2>Enter OTP</h2>
+               {% if msg %}
+               <b style="color: red;">{{msg}}</b>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-10 offset-md-1">
+            <form id="request" class="main_form" method="post" action="{% url 'verify_otp' %}">
+               {% csrf_token %}
+               <table>
+                <tr>
+                    
+                    <td><input type="hidden" name="otp" value="{{otp}}"></td>
+                    <td><input type="hidden" name="email" value="{{email}}"></td>
+                </tr>
+               </table>
+ 
+
+               <div class="row">
+                  <div class="col-md-12">
+                     <input class="contactus" placeholder="Enter OTP" type="type" name="uotp" id="email" onblur="checkOTP();">
+                  
+               </div>
+
+
+                  <div class="col-md-12">
+                     <button class="send_btn">Verify OTP</button>
+
+
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+</div>
+<!-- end contact -->
+</html>
+{% endblock %}

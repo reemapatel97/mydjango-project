@@ -1,0 +1,58 @@
+{% extends 'seller_header.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+      <!--  contact -->
+      <div class="contact">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Edit Product</h2>
+
+                     {% if msg %}
+                     <b style="color: red;">{{msg}}</b>
+                     {% endif %}
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+
+               <div class="col-md-10 offset-md-1">
+                  <form id="request" class="main_form" method="post" action="{% url 'seller_edit_product' pk=product.pk %}" enctype="multipart/form-data">
+                     {% csrf_token %}
+                     <div class="row">
+                        <div class="col-md-12">
+                           <input class="contactus" type="text" name="product_category" value={{product.product_category}}>
+                           
+                        </div>
+                        <div class="col-md-12">
+                           <input class="contactus" type="text" name="product_model" value={{product.product_model}}> 
+                        </div>
+                        <div class="col-md-12">
+                           <input class="contactus" type="type" name="product_price" value={{product.product_price}}> 
+                        </div>
+                        <div class="col-md-12">
+                           <textarea class="textarea" type="text" placeholder="Product Description" name="product_desc">{{product.product_desc}}</textarea>
+                        </div>
+                        <div class="col-md-12">
+                           <img src="{{product.product_image.url}}" width="100px" height="100px">
+                        </div>
+                        <div class="col-md-12">
+                           <input class="contactus" type="file" name="product_image"> 
+                        </div>
+                                               
+                        <div class="col-md-12">
+                           <button class="send_btn">Edit Product</button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end contact -->
+     </html>
+     {% endblock %}
